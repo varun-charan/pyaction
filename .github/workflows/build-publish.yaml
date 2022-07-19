@@ -1,0 +1,35 @@
+name: build-push-pyaction-package
+
+on:
+  push:
+    branches:
+      # Meant for NETxxyy-* tickets
+      - feature/*
+      # Meant for DEVOPS-* tickets
+      - hotfix/*
+  pull_request:
+    types:
+      - closed
+      - synchronize
+    branches:
+      # Meant for running after PR merged on master
+      - master
+  # For manual trigger of job, if required. Avoids need to use dummy commits to initiate workflow.Applicable to master branch only since for it, source tag is picked from Git tags and not from Commit hash as is the case for dev branches.
+  workflow_dispatch:
+
+jobs:
+  # This is the actual calling job that calls the reusable workflow - to push image into Docker Artifactory Repo.
+  invoke-reusable:
+    uses: varun-charan/reusable-workflows/.github/workflows/python-pkg-build-push.yaml@feature/create-custom-action
+    with:
+      pkg_name: devops
+      index_url_dev: ${{ secrets.INDEX_URL_DEV }}
+      index_url: ${{ secrets.INDEX_URL }}
+      build_directory: pyaction
+    secrets:
+      index_url_pip_dev: ${{ secrets.INDEX_URL_PIP_DEV }}
+      index_url_pip: ${{ secrets.INDEX_URL_PIP }}
+      registry_username: ${{ secrets.ARTIFACTORY_USERNAME }}
+      registry_password: ${{ secrets.ARTIFACTORY_PASSWORD }}
+      
+      

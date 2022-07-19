@@ -1,0 +1,2 @@
+include src/devops/resources/*
+include src/devops/resources/templates/*

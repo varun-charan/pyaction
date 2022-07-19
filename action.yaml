@@ -1,0 +1,54 @@
+name: "Pyactions Action"
+description: "Run a Pyaction command"
+author: "varun.charan"
+
+inputs:
+  devops_version:
+    description: "DevOps CLI version required"
+    required: true
+    type: string
+  index_url_pip:
+    description: "URL to use for pip install package from Private Python Index"
+    required: true
+    type: string
+  flags:
+    description: "Additional flags in devops cli command"
+    required: false
+    type: bool
+    default: false
+  command:
+    description: "Pyactions command you want to run"
+    required: false
+    type: string
+  subcommand:
+    description: "Pyactions subcommand for the command you want to run"
+    required: false
+    type: string
+  args:
+    description: "Arguments to the Pyactions command"
+    required: false
+    type: string
+# outputs:
+#   stdout:
+#     description: "Program stdout"
+#   stderr:
+#     description: "Program stderr"
+#   error:
+#     description: "A string of 'true' or 'false' that tells if there were errors, use in conjunction with the fail-on-error input"
+runs:
+  using: "composite"
+  steps:
+    - name: Setup devops cli
+      run: pip install devops==${{ env.VERSION }} --extra-index ${{ INDEX_URL_PIP }}
+      env:
+        VERSION: ${{ inputs.devops_version }}
+        INDEX_URL_PIP: ${{ inputs.index_url_pip }}
+
+    - name: Run the devops cli command
+      run: devops ${{ env.FLAGS }} ${{ env.COMMAND }} ${{ env.SUBCOMMAND }} ${{ env.ARGS }}
+      env:
+        FLAGS: ${{ inputs.flags }}
+        COMMAND: ${{ inputs.command }}
+        SUBCOMMAND: ${{ inputs.subcommand }}
+        ARGS: ${{ inputs.args }}
+
