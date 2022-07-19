@@ -23,10 +23,10 @@ jobs:
     uses: varun-charan/reusable-workflows/.github/workflows/python-pkg-build-push.yaml@feature/create-custom-action
     with:
       pkg_name: devops
-      index_url_dev: ${{ secrets.INDEX_URL_DEV }}
-      index_url: ${{ secrets.INDEX_URL }}
       build_directory: pyaction
     secrets:
+      index_url_dev: ${{ secrets.INDEX_URL_DEV }}
+      index_url: ${{ secrets.INDEX_URL }}
       index_url_pip_dev: ${{ secrets.INDEX_URL_PIP_DEV }}
       index_url_pip: ${{ secrets.INDEX_URL_PIP }}
       registry_username: ${{ secrets.ARTIFACTORY_USERNAME }}
