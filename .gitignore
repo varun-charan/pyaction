@@ -1,0 +1,16 @@
+# Python
+.eggs
+*.egg-info
+__pycache__
+build
+dist
+
+# compose
+/compose/localstack
+/compose/storage
+
+# editor and IDE paraphernalia
+.idea
+*.iml
+*.swp
+*.swo
