@@ -13,6 +13,9 @@ from os.path import splitext
 from setuptools import find_packages
 from setuptools import setup
 
+# Argument to capture next git tag version from repo
+git_version = sys.argv[1]
+del sys.argv[1]
 
 def read(*names, **kwargs):
     """
@@ -23,10 +26,9 @@ def read(*names, **kwargs):
         encoding=kwargs.get('encoding', 'utf8')
     ).read()
 
-
 setup(
     name='devops',
-    version='1.0.0',
+    version=git_version,
     license='TBD',
     description='',
     author='Varun Charan',
@@ -83,7 +85,6 @@ setup(
         'dev': [
             'pytest',
             'pytest-runner',
-            'bumpversion',
         ]
     },
     entry_points={
