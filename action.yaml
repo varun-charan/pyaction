@@ -41,7 +41,7 @@ runs:
     - name: Setup devops cli
       shell: bash
       run: |
-        pip install devops==${{ env.VERSION }} --extra-index ${{ INDEX_URL_PIP }}
+        pip install devops==${{ env.VERSION }} --extra-index ${{ env.INDEX_URL_PIP }}
         devops --version
       env:
         VERSION: ${{ inputs.devops_version }}
