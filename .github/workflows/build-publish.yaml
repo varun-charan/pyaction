@@ -20,7 +20,7 @@ on:
 jobs:
   # This is the actual calling job that calls the reusable workflow - to push image into Docker Artifactory Repo.
   invoke-reusable:
-    uses: varun-charan/reusable-workflows/.github/workflows/python-pkg-build-push.yaml@feature/create-custom-action
+    uses: varun-charan/reusable-workflows/.github/workflows/python-pkg-build-push.yaml@master
     with:
       pkg_name: devops
     secrets:
