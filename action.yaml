@@ -4,9 +4,10 @@ author: "Charan, Varun <varun.charan>"
 
 inputs:
   devops_version:
-    description: "DevOps CLI version required"
-    required: true
+    description: "DevOps CLI version required. Defaults to release version of pyaction"
+    required: false
     type: string
+    default: "v0.2.0"
   index_url_pip:
     description: "URL to use for pip install package from Private Python Index"
     required: true
