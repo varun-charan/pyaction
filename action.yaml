@@ -1,12 +1,13 @@
 name: "Pyactions Action"
 description: "Run a Pyaction command"
-author: "varun.charan"
+author: "Charan, Varun <varun.charan>"
 
 inputs:
   devops_version:
-    description: "DevOps CLI version required"
-    required: true
+    description: "DevOps CLI version required. Defaults to release version of pyaction"
+    required: false
     type: string
+    default: "v0.3.0"
   index_url_pip:
     description: "URL to use for pip install package from Private Python Index"
     required: true
@@ -14,11 +15,11 @@ inputs:
   flags:
     description: "Additional flags in devops cli command"
     required: false
-    type: bool
-    default: false
+    type: string
+    default: ""
   command:
     description: "Pyactions command you want to run"
-    required: false
+    required: true
     type: string
   subcommand:
     description: "Pyactions subcommand for the command you want to run"
@@ -27,30 +28,35 @@ inputs:
   args:
     description: "Arguments to the Pyactions command"
     required: false
-    type: string
-# outputs:
-#   stdout:
-#     description: "Program stdout"
-#   stderr:
-#     description: "Program stderr"
-#   error:
-#     description: "A string of 'true' or 'false' that tells if there were errors, use in conjunction with the fail-on-error input"
+    type: list
 runs:
   using: "composite"
   steps:
     - name: Setup devops cli
+      shell: bash
       run: |
-        pip install devops==${{ env.VERSION }} --extra-index ${{ INDEX_URL_PIP }}
+        pip install devops==${{ env.VERSION }} --extra-index ${{ env.INDEX_URL_PIP }}
         devops --version
       env:
         VERSION: ${{ inputs.devops_version }}
         INDEX_URL_PIP: ${{ inputs.index_url_pip }}
 
-    - name: Run the devops cli command
-      run: devops ${{ env.FLAGS }} ${{ env.COMMAND }} ${{ env.SUBCOMMAND }} ${{ env.ARGS }}
+    - name: Run the exec devops cli command
+      if: ${{ env.COMMAND == 'exec' }}
+      shell: bash
+      run: devops ${{ env.FLAGS }} ${{ env.COMMAND }} ${{ env.SUBCOMMAND }} '${{ env.ARGS }}'
       env:
         FLAGS: ${{ inputs.flags }}
         COMMAND: ${{ inputs.command }}
         SUBCOMMAND: ${{ inputs.subcommand }}
         ARGS: ${{ inputs.args }}
 
+    - name: Run all non-exec devops cli commands
+      if: ${{ env.COMMAND != 'exec' }}
+      shell: bash
+      run: devops ${{ env.FLAGS }} ${{ env.COMMAND }} ${{ env.SUBCOMMAND }} ${{ env.ARGS }}
+      env:
+        FLAGS: ${{ inputs.flags }}
+        COMMAND: ${{ inputs.command }}
+        SUBCOMMAND: ${{ inputs.subcommand }}
+        ARGS: ${{ inputs.args }}
