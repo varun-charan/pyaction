@@ -39,6 +39,7 @@ runs:
   using: "composite"
   steps:
     - name: Setup devops cli
+      shell: bash
       run: |
         pip install devops==${{ env.VERSION }} --extra-index ${{ INDEX_URL_PIP }}
         devops --version
@@ -47,6 +48,7 @@ runs:
         INDEX_URL_PIP: ${{ inputs.index_url_pip }}
 
     - name: Run the devops cli command
+      shell: bash
       run: devops ${{ env.FLAGS }} ${{ env.COMMAND }} ${{ env.SUBCOMMAND }} ${{ env.ARGS }}
       env:
         FLAGS: ${{ inputs.flags }}
