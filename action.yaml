@@ -27,7 +27,7 @@ inputs:
   args:
     description: "Arguments to the Pyactions command"
     required: false
-    type: string
+    type: list
 # outputs:
 #   stdout:
 #     description: "Program stdout"
@@ -47,7 +47,18 @@ runs:
         VERSION: ${{ inputs.devops_version }}
         INDEX_URL_PIP: ${{ inputs.index_url_pip }}
 
-    - name: Run the devops cli command
+    - name: Run the exec devops cli command
+      if: ${{ env.COMMAND == "exec" }}
+      shell: bash
+      run: devops ${{ env.FLAGS }} ${{ env.COMMAND }} ${{ env.SUBCOMMAND }} '${{ env.ARGS }}'
+      env:
+        FLAGS: ${{ inputs.flags }}
+        COMMAND: ${{ inputs.command }}
+        SUBCOMMAND: ${{ inputs.subcommand }}
+        ARGS: ${{ inputs.args }}
+
+    - name: Run all non-exec devops cli commands
+      if: ${{ env.COMMAND != "exec" }}
       shell: bash
       run: devops ${{ env.FLAGS }} ${{ env.COMMAND }} ${{ env.SUBCOMMAND }} ${{ env.ARGS }}
       env:
@@ -55,4 +66,3 @@ runs:
         COMMAND: ${{ inputs.command }}
         SUBCOMMAND: ${{ inputs.subcommand }}
         ARGS: ${{ inputs.args }}
-
