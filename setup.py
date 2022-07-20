@@ -3,7 +3,7 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 
-import io
+import io, sys
 from glob import glob
 from os.path import basename
 from os.path import dirname
