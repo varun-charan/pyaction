@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
     - name: Test pyaction with non-exec devops cli command
-      uses: varun-charan/pyaction@hotfix/make-pyaction-work
+      uses: varun-charan/pyaction@v0.3.0
       with:
         index_url_pip: ${{ secrets.INDEX_URL_PIP }}
         command: "cheeseshop"
