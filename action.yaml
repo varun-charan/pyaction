@@ -7,7 +7,7 @@ inputs:
     description: "DevOps CLI version required. Defaults to release version of pyaction"
     required: false
     type: string
-    default: "v0.2.0"
+    default: "v0.3.0"
   index_url_pip:
     description: "URL to use for pip install package from Private Python Index"
     required: true
@@ -29,13 +29,6 @@ inputs:
     description: "Arguments to the Pyactions command"
     required: false
     type: list
-# outputs:
-#   stdout:
-#     description: "Program stdout"
-#   stderr:
-#     description: "Program stderr"
-#   error:
-#     description: "A string of 'true' or 'false' that tells if there were errors, use in conjunction with the fail-on-error input"
 runs:
   using: "composite"
   steps:
