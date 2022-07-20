@@ -12,7 +12,6 @@
 ## Usage
 ```yaml
 jobs:
-  # This is the actual calling job that calls the reusable workflow - to push image into Docker Artifactory Repo.
   exec_command:
     runs-on: ubuntu-latest
     steps:
