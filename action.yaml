@@ -48,7 +48,7 @@ runs:
         INDEX_URL_PIP: ${{ inputs.index_url_pip }}
 
     - name: Run the exec devops cli command
-      if: ${{ env.COMMAND == "exec" }}
+      if: ${{ env.COMMAND == 'exec' }}
       shell: bash
       run: devops ${{ env.FLAGS }} ${{ env.COMMAND }} ${{ env.SUBCOMMAND }} '${{ env.ARGS }}'
       env:
@@ -58,7 +58,7 @@ runs:
         ARGS: ${{ inputs.args }}
 
     - name: Run all non-exec devops cli commands
-      if: ${{ env.COMMAND != "exec" }}
+      if: ${{ env.COMMAND != 'exec' }}
       shell: bash
       run: devops ${{ env.FLAGS }} ${{ env.COMMAND }} ${{ env.SUBCOMMAND }} ${{ env.ARGS }}
       env:
