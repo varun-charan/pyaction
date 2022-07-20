@@ -1,6 +1,6 @@
 name: "Pyactions Action"
 description: "Run a Pyaction command"
-author: "varun.charan"
+author: "Charan, Varun <varun.charan>"
 
 inputs:
   devops_version:
@@ -14,11 +14,11 @@ inputs:
   flags:
     description: "Additional flags in devops cli command"
     required: false
-    type: bool
-    default: false
+    type: string
+    default: ""
   command:
     description: "Pyactions command you want to run"
-    required: false
+    required: true
     type: string
   subcommand:
     description: "Pyactions subcommand for the command you want to run"
