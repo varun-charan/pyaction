@@ -13,6 +13,7 @@ import click
 import click_option_group
 
 import devops.cheeseshop
+import devops.execute
 import devops.logconfig
 
 # ----------------------------------------------------------------------------
@@ -23,7 +24,6 @@ import devops.logconfig
 @click.option("--verbose", "-v", is_flag=True, help="Enables verbose mode.")
 def cli(verbose):
     devops.logconfig.configure_logging(verbose=verbose)
-
 
 # ----------------------------------------------------------------------------
 # Cheesehop
@@ -56,3 +56,18 @@ def server_down(port, team):
         Bring the cheeseshop application server down
     """
     return devops.cheeseshop.server_down(port, team)
+
+# ----------------------------------------------------------------------------
+# Execute
+# ----------------------------------------------------------------------------
+@cli.command('exec')
+@click.option('--env',
+              help='Sets environment variable, usage: --env NAME1=VALUE --env NAME2=VALUE',
+              multiple=True)
+@click.argument('command')
+def execute(env, command):
+    """
+        Executes a command with the environment.
+    """
+
+    devops.execute.execute(command, env)
