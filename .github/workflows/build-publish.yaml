@@ -23,7 +23,6 @@ jobs:
     uses: varun-charan/reusable-workflows/.github/workflows/python-pkg-build-push.yaml@feature/create-custom-action
     with:
       pkg_name: devops
-      build_directory: pyaction
     secrets:
       index_url_dev: ${{ secrets.INDEX_URL_DEV }}
       index_url: ${{ secrets.INDEX_URL }}
