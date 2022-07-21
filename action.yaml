@@ -12,6 +12,10 @@ inputs:
     description: "URL to use for pip install package from Private Python Index"
     required: true
     type: string
+  export_list:
+    description: "variable key=value pairs to run export command with."
+    required: false
+    type: list
   flags:
     description: "Additional flags in devops cli command"
     required: false
@@ -60,9 +64,15 @@ runs:
       id: non-exec-command
       shell: bash
       run: |
+        IFS=', ' read -r -a export_list <<< "${{ env.EXPORT_LIST }}"
+        for element in "${export_list[@]}"
+        do
+            export $element
+        done
         echo "::set-output name=stdout::$(devops ${{ env.FLAGS }} ${{ env.COMMAND }} ${{ env.SUBCOMMAND }} ${{ env.ARGS }})"
       env:
         FLAGS: ${{ inputs.flags }}
         COMMAND: ${{ inputs.command }}
         SUBCOMMAND: ${{ inputs.subcommand }}
         ARGS: ${{ inputs.args }}
+        EXPORT_LIST: ${{ inputs.export_list }}
