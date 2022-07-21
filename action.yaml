@@ -29,6 +29,10 @@ inputs:
     description: "Arguments to the Pyactions command"
     required: false
     type: list
+outputs:
+  stdout:
+    description: "Stdout output of devops cli commands"
+    value: ${{ steps.non-exec-command.outputs.stdout }}
 runs:
   using: "composite"
   steps:
@@ -53,8 +57,10 @@ runs:
 
     - name: Run all non-exec devops cli commands
       if: ${{ env.COMMAND != 'exec' }}
+      id: non-exec-command
       shell: bash
-      run: devops ${{ env.FLAGS }} ${{ env.COMMAND }} ${{ env.SUBCOMMAND }} ${{ env.ARGS }}
+      run: |
+        echo "::set-output name=stdout::$(devops ${{ env.FLAGS }} ${{ env.COMMAND }} ${{ env.SUBCOMMAND }} ${{ env.ARGS }})"
       env:
         FLAGS: ${{ inputs.flags }}
         COMMAND: ${{ inputs.command }}
