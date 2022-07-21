@@ -74,6 +74,7 @@ setup(
         'MarkupSafe == 2.0.1',
         'Werkzeug == 2.0.2',
         'gunicorn == 20.1.0',
+        'hvac >= 0.2.1',
     ],
     setup_requires=[
         'pytest-runner',
