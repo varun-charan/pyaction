@@ -32,6 +32,24 @@ jobs:
         command: "cheeseshop"
         subcommand: "server-up"
         args: "-t devops"
+        
+  non_exec_command_output:
+    runs-on: ubuntu-latest
+    outputs:
+      stdout: ${{ steps.pyaction_capture_cmd_output.outputs.stdout }}
+    steps:
+    - name: Test pyaction with non-exec devops cli command
+      id: pyaction_capture_cmd_output
+      uses: varun-charan/pyaction@v0.4.0
+      env:
+        VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
+        VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
+      with:
+        index_url_pip: ${{ secrets.INDEX_URL_PIP }}
+        export_list: "VAULT_ADDR=${{ env.VAULT_ADDR }}, VAULT_TOKEN=${{ env.VAULT_TOKEN }}"
+        command: "vault"
+        subcommand: "get"
+        args: "prd/devops/newreleases automation_api_key"
 ```
 
 ## Development
