@@ -2,7 +2,7 @@
 ### Python-based CLI tool
 <br>
 
-![Workflow Status](https://img.shields.io/github/workflow/status/varun-charan/pyaction/build-push-pyaction-package?label=build-push-pyaction-package)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/varun-charan/pyaction/build-publish.yaml?branch=master&label=build)](https://github.com/varun-charan/pyaction/actions/workflows/build-publish.yaml?query=branch%3Amaster)
 ![Latest Release](https://img.shields.io/github/v/release/varun-charan/pyaction?label=latest%20release)
 ![Release Date](https://img.shields.io/github/release-date/varun-charan/pyaction)
 [![GitHub issues](https://img.shields.io/github/issues/varun-charan/pyaction)](https://github.com/varun-charan/pyaction/issues)
